@@ -1,0 +1,77 @@
+{
+  "type": "record",
+  "name": "userInfo",
+  "namespace": "my.example",
+  "fields": [
+    {
+      "name": "username",
+      "type": "string",
+      "default": "NONE"
+    },
+    {
+      "name": "age",
+      "type": "int",
+      "default": -1
+    },
+    {
+      "name": "address1",
+      "type": {
+        "type": "record",
+        "name": "main_address",
+        "fields": [
+          {
+            "name": "street",
+            "type": "string",
+            "default": "NONE"
+          },
+          {
+            "name": "city",
+            "type": "string",
+            "default": "NONE"
+          },
+          {
+            "name": "phone",
+            "type": {
+              "type": "record",
+              "name": "phonenumber",
+              "fields": [
+                {
+                  "name": "phone1",
+                  "type": "string",
+                  "default": "NONE"
+                },
+                {
+                  "name": "phone2",
+                  "type": "string",
+                  "default": "NONE"
+                }
+              ]
+            },
+            "default": {}
+          }
+        ]
+      },
+      "default": {}
+    },
+    {
+      "name": "address2",
+      "type": {
+        "type": "record",
+        "name": "sub_address",
+        "fields": [
+          {
+            "name": "street",
+            "type": "string",
+            "default": "NONE"
+          },
+          {
+            "name": "city",
+            "type": "string",
+            "default": "NONE"
+          }
+        ]
+      },
+      "default": {}
+    }
+  ]
+}
