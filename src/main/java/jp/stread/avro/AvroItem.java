@@ -1,7 +1,11 @@
 package jp.stread.avro;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
@@ -9,6 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class AvroItem extends TreeItem<String> {
+	
+	private static Logger log = LoggerFactory.getLogger(AvroItem.class);
 	
 	private final Node listIcon = 
 	        new ImageView(new Image(ClassLoader.getSystemResourceAsStream("images/list_packages.gif")));
@@ -56,6 +62,9 @@ public class AvroItem extends TreeItem<String> {
     				itemIcon = new ImageView(new Image(ClassLoader.getSystemResourceAsStream("images/icon_package.gif")));
     				if(map.get(key) instanceof Integer) {
         				nodeValue = String.valueOf(map.get(key));
+    				}
+    				else if(map.get(key) instanceof List) {
+    					log.error(String.valueOf(((List)map.get(key)).size()));
     				}
     				else {
         				nodeValue = (String)map.get(key);
