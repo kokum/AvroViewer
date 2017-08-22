@@ -1,9 +1,13 @@
 package jp.stread.avro;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -29,6 +33,8 @@ import javafx.scene.control.cell.TextFieldTableCell;
 
 public class ViewerController {
 	
+	private static Logger log = LoggerFactory.getLogger(ViewerController.class);
+	
 	private final Node rootIcon = 
 	        new ImageView(new Image(ClassLoader.getSystemResourceAsStream("images/page_package.gif")));
 	private String rootName = null;
@@ -36,6 +42,7 @@ public class ViewerController {
 	final FileChooser fileChooser = new FileChooser();
 	
 	@FXML private Button openButton;
+	@FXML private Button exportButton;
 	@FXML private TreeView<String> tree1;
 	
 	@FXML private TableView<TableRecord> contentTable;
@@ -95,7 +102,21 @@ public class ViewerController {
 	    		buildTree(items);
         }
     }
-	
+
+    @FXML
+    public void onbtnExportClicked(ActionEvent event) {
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+        		AvroReader reader = new AvroReader(file);
+        		try {
+        			reader.exportSchema();
+        		}
+        		catch(IOException e) {
+        			log.error(e.getMessage(), e);
+        		}
+        }
+    }
+
     public void itemSelected(AvroItem target) {
     		tableRecord.clear();
 		nameColumn.setCellValueFactory(new PropertyValueFactory<TableRecord, String>("name"));

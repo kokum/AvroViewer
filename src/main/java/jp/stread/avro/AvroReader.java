@@ -1,9 +1,12 @@
 package jp.stread.avro;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,6 +20,8 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.IndexedRecord;
 import org.apache.avro.io.DatumReader;
 import org.codehaus.jackson.map.ObjectMapper;
+
+import javafx.stage.FileChooser;
 
 public class AvroReader {
 	
@@ -51,6 +56,25 @@ public class AvroReader {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void exportSchema() throws IOException {
+		File target = new FileChooser().showSaveDialog(null);
+		String schemaText = schema.toString(true);
+		FileWriter filewriter = null;
+		BufferedWriter bw = null;
+		PrintWriter pw = null;
+		try {
+			filewriter = new FileWriter(target);
+			bw = new BufferedWriter(filewriter);
+			pw = new PrintWriter(bw);
+			pw.print(schemaText);
+		}
+		finally {
+			if(pw != null) pw.close();
+			if(bw != null) bw.close();
+			if(filewriter != null) filewriter.close();
 		}
 	}
 
